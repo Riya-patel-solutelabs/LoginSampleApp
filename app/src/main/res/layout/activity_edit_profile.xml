@@ -46,12 +46,14 @@
         app:titleTextColor="@color/purple_700"
         tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_profile"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/baseline_person_pin_24"
+        android:src="@drawable/baseline_person_24"
+        app:civ_border_width="@dimen/dp_2"
+        app:civ_border_color="@color/black"
         android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
