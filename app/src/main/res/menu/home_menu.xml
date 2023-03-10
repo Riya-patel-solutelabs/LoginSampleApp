@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/delete_user"
+        android:icon="@drawable/baseline_delete_24"
+        android:iconTint="@color/black"
+        app:showAsAction="withText"
+        android:title="Delete User"
+
+        />
+    <item android:id="@+id/logout"
+        android:icon="@drawable/baseline_power_settings_new_24"
+        android:iconTint="@color/black"
+        app:showAsAction="withText"
+        android:title="Logout"/>
+
+
+</menu>

@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">LoginApp</string>
+    <string name="label_register_yourself">Register Yourself!</string>
+    <string name="label_first_name">First Name</string>
+    <string name="label_last_name">Last Name</string>
+    <string name="label_male">Male</string>
+    <string name="label_female">Female</string>
+    <string name="label_select_your_hobbies">Select Your Hobbies</string>
+    <string name="label_select_hobbies">Select Hobbies</string>
+    <string name="label_select_dob">Select DOB</string>
+    <string name="label_age">Age</string>
+    <string name="label_submit">Submit</string>
+    <string name="label_details">Details</string>
+    <string name="hobby_error">\"Hobby cannot be empty \"</string>
+    <string name="lname_error">Last Name cannot be empty</string>
+    <string name="fname_error">First Name cannot be empty</string>
+    <string name="date_error">Invalid Date</string>
+    <string name="dob_error">DOB cannot be empty</string>
+    <string name="label_welcome">Welcome</string>
+    <string name="label_next">Next</string>
+    <string name="label_home">Home</string>
+    <string name="label_profile">Profile</string>
+    <string name="label_settings">Settings</string>
+
+
+    <string-array name="Hobbies">
+        <item>Select Your Hobbies</item>
+        <item>Cricket</item>
+        <item>Dancing</item>
+        <item>Listening Music</item>
+        <item>Reading</item>
+        <item>Singing</item>
+        <item>Sketching</item>
+        <item>Traveling</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="label_login">Login</string>
+    <string name="label_username_or_email">Username or Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_remember_me">Remember Me</string>
+    <string name="don_t_have_an_account_signup">Don\'t have an account? Signup</string>
+    <string name="label_signup">Signup</string>
+    <string name="label_email">Email</string>
+    <string name="label_gender">Gender</string>
+    <string name="label_dob">DOB</string>
+    <string name="label_save">SAVE</string>
+    <string name="label_cancel">Cancel</string>
+</resources>

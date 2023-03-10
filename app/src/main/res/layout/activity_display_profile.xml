@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.DisplayProfile">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:title="Profile Screen"
+        app:titleTextColor="@color/purple_700"
+        android:background="@color/light_blue"
+        android:theme="@style/MyToolbarStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageView_profile"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        android:background="@drawable/baseline_person_pin_24"
+        android:backgroundTint="@color/black"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_fname"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/imageView_profile"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:hint="@string/label_first_name"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_lname"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/textView_fname"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:hint="@string/label_last_name"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_email"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/textView_lname"
+        android:drawableStart="@drawable/baseline_email_24"
+        android:hint="@string/label_email"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_pass"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/textView_email"
+        android:drawableStart="@drawable/baseline_lock_24"
+        android:hint="@string/label_password"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_gender"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/textView_pass"
+        android:drawableStart="@drawable/baseline_transgender_24"
+        android:hint="@string/label_gender"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_dob"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/textView_gender"
+        android:drawableStart="@drawable/baseline_calendar_month_30"
+        android:hint="@string/label_dob"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_age"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/textView_dob"
+        android:drawableStart="@drawable/baseline_perm_contact_calendar_24"
+        android:hint="@string/label_age"
+        style="@style/TextView_Style"
+        tools:ignore="MissingConstraints" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue"
+        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/nav_menu"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
