@@ -1,27 +1,38 @@
 package com.example.myapp.ui
 
+import Data_Class.Convertors
 import Data_Class.UserData
 import Data_Class.UserDatabase
 import Validation.ValidationUtils
 import android.app.DatePickerDialog
+import android.app.DownloadManager.Request
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.UserManager
+import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.example.myapp.R
 import com.example.myapp.databinding.ActivityEditProfileBinding
 
 import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 class EditProfileActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var binding: ActivityEditProfileBinding
     private lateinit var userDb:UserDatabase
     private lateinit var datePickerDialog: DatePickerDialog
-
+    private lateinit var  userDaata:UserData
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +83,8 @@ class EditProfileActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             }
         }
 
+
+
         binding.buttonCancel.setOnClickListener {
             startActivity(Intent(this, DisplayProfile::class.java))
         }
@@ -79,8 +92,78 @@ class EditProfileActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             setDate()
         }
 
+        binding.imageViewProfile.setOnClickListener {
+            val option= arrayOf(
+                "Take Photo",
+                "Choose from Gallery")
+            val builder= AlertDialog.Builder(this)
+            builder.setTitle("Select Option")
+            builder.setItems(option){
+                dialog, item ->
+                when{
+                    option[item]== "Take Photo"->{
+                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        startActivityForResult(intent, REQUEST_CAMERA)
+                    }
+                    option[item] =="Choose from Gallery"->{
+                        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        intent.type = "image/*"
+                        startActivityForResult(intent, REQUEST_GALLERY)
+                    }
+                }
+            }
+            builder.show()
+        }
         }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode== RESULT_OK){
+            when(requestCode) {
+                REQUEST_CAMERA -> {
+                    val imageUri = data?.extras!!.get("data") as Bitmap
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    imageUri.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                    val byteArray = byteArrayOutputStream.toByteArray()
+                    imageData=byteArray
+                 //   imageData= imageUri
+                    binding.imageViewProfile.setImageBitmap(imageUri)
+
+                }
+                REQUEST_GALLERY -> {
+//                    val selectedImage = data?.data
+//                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+//                    val cursor =
+//                        contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
+//                    cursor!!.moveToFirst()
+//                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+//                    val picturePath = cursor.getString(columnIndex)
+//                    cursor.close()
+//                    val image = BitmapFactory.decodeFile(picturePath)
+//                    val byteArrayOutputStream = ByteArrayOutputStream()
+//                    image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+//                    val byteArray = byteArrayOutputStream.toByteArray()
+//                    imageData = byteArray
+//                    binding.imageViewProfile.setImageBitmap(image)
+
+                    val selectedImageUri: Uri? = data?.data
+                    if (selectedImageUri != null) {
+                        val inputStream = contentResolver.openInputStream(selectedImageUri)
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                        val byteArrayOutputStream = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+                        val imageByteArray: ByteArray = byteArrayOutputStream.toByteArray()
+                        imageData= imageByteArray
+                        binding.imageViewProfile.setImageBitmap(bitmap)
+
+                    }
+                }
+            }
+            }
+
+    }
 
 
     suspend fun updateDetails(userDet: UserData){
@@ -94,6 +177,9 @@ class EditProfileActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                 user.gender= userDet.gender
                 user.dob= userDet.dob
                 user.age=userDet.age
+                user.imagePath= imageData
+
+                println("image= ${user.imagePath}")
                 LoginActivity.currentemail= userDet.email!!
 
                 val sharedPreferences = getSharedPreferences(LoginActivity.sharedPrefKey, Context.MODE_PRIVATE)
@@ -159,6 +245,14 @@ class EditProfileActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
                 binding.editTextDob.setText(user.dob)
                 binding.editTextAge.setText(user.age.toString())
 
+                if(user.imagePath==null){
+                    binding.imageViewProfile.setImageResource(R.drawable.baseline_person_24)
+                }else{
+                    val bitmap=BitmapFactory.decodeByteArray(user.imagePath, 0, user.imagePath!!.size)
+                    binding.imageViewProfile.setImageBitmap(bitmap)
+                }
+
+
 
 
 
@@ -166,6 +260,13 @@ class EditProfileActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         }
 
 
+    }
+
+    companion object {
+        private const val REQUEST_CAMERA = 1
+        private const val REQUEST_GALLERY = 2
+
+        lateinit var imageData:ByteArray
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

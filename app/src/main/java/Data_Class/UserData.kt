@@ -1,5 +1,10 @@
 package Data_Class
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import androidx.core.content.ContextCompat
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -13,6 +18,12 @@ data class UserData(
     var gender:String?,
     var dob: String?,
     var age:String?,
-    var rememberMe: Boolean?
+    var rememberMe: Boolean?,
+    var imagePath: ByteArray?=null,
+//    var imagePath : Uri?=null
+
+
+
+
 
 )

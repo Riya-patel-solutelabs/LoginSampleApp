@@ -1,11 +1,10 @@
 package Data_Class
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 @Database(entities = [UserData::class], version = 1)
+@TypeConverters(Convertors::class)
 abstract class UserDatabase:RoomDatabase() {
 
     abstract fun userDao(): UserDao
