@@ -2,6 +2,7 @@ package com.example.myapp.ui
 
 import Data_Class.UserDatabase
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -62,16 +63,13 @@ class DisplayProfile : AppCompatActivity() {
 
         GlobalScope.launch {
             fetchUser(userEmail)
-
-
         }
-
-
         // user= userDb.userDao().getAll()
     }
     suspend fun fetchUser(userEmail: String?) {
         withContext(Dispatchers.Main){
             val user= userDb.userDao().findByEmail(userEmail!!)
+
             if(user!=null){
                 binding.textViewFname.text= user.firstname.toString()
                 binding.textViewLname.text=user.lastname
@@ -80,11 +78,18 @@ class DisplayProfile : AppCompatActivity() {
                 binding.textViewGender.text=user.gender
                 binding.textViewDob.text= user.dob
                 binding.textViewAge.text= user.age.toString()
+                if(user.imagePath==null){
+                    binding.imageViewProfile.setImageResource(R.drawable.baseline_person_24)
+                }else{
+                    val bitmap=BitmapFactory.decodeByteArray(user.imagePath, 0, user.imagePath!!.size)
+                    binding.imageViewProfile.setImageBitmap(bitmap)
+                }
+
+
+            }
             }
         }
 
-
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
