@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DisplayProfile">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragments.ProfileFragment">
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
         android:layout_width="wrap_content"
@@ -43,16 +43,18 @@
         android:theme="@style/MyToolbarStyle"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-    <androidx.appcompat.widget.AppCompatImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_profile"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        android:src="@drawable/baseline_person_24"
+        app:civ_border_width="@dimen/dp_2"
+        app:civ_border_color="@color/black"
+        android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
-        android:background="@drawable/baseline_person_pin_24"
-        android:backgroundTint="@color/black"/>
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textView_fname"
@@ -122,14 +124,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/light_blue"
-        app:itemTextColor="@drawable/selector"
         app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_menu"
-        />
-
-
+        app:menu="@menu/nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

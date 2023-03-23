@@ -1,5 +1,6 @@
 package Data_Class
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -13,6 +14,7 @@ data class UserData(
     var gender:String?,
     var dob: String?,
     var age:String?,
-    var rememberMe: Boolean?
+    var rememberMe: Boolean?,
+    var profilePic: String?=null
 
 )

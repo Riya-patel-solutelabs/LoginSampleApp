@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.EditProfileActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragments.EditProfileFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
@@ -42,16 +41,18 @@
         android:theme="@style/MyToolbarStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:title="Profile Screen"
+        app:title="Edit Profile Screen"
         app:titleTextColor="@color/purple_700"
         tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView_profile"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/baseline_person_pin_24"
+        android:src="@drawable/baseline_person_24"
+        app:civ_border_width="@dimen/dp_2"
+        app:civ_border_color="@color/black"
         android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -142,22 +143,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-<!--        android:id="@+id/button_dob"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="@id/guideline_left"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/guideline_right"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/textInputLayout_gender"-->
-<!--        android:background="@color/white"-->
-<!--        android:drawableTint="@color/grey"-->
-<!--        android:layout_marginTop="@dimen/dp_10"-->
-<!--        android:textColorHint="@color/black"-->
-<!--        android:drawableStart="@drawable/baseline_calendar_month_30"-->
-<!--        android:drawableEnd="@drawable/baseline_arrow_drop_down_30"-->
-<!--        android:hint="@string/label_select_dob"-->
-<!--        android:gravity="left|center"-->
-<!--        android:padding="@dimen/dp_10"/>-->
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_dob"
         style="@style/TextInputLayout_Style"
@@ -225,6 +211,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_save"
         app:layout_constraintTop_toBottomOf="@id/textInputLayout_age"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
