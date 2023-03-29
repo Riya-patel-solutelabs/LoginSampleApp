@@ -5,8 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [UserData::class], version = 1)
+@Database(entities = [UserData::class], version = 3)
 @TypeConverters(Convertors::class)
 abstract class UserDatabase:RoomDatabase() {
 
@@ -26,12 +28,23 @@ abstract class UserDatabase:RoomDatabase() {
                     context.applicationContext,
                     UserDatabase::class.java,
                     "user_database"
-                ).build()
+                ).addMigrations(MIGRATION_1_3)
+                    .build()
                 INSTANCE=instance
                 return instance
 
             }
         }
 
+        val MIGRATION_1_3 = object : Migration(1, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Add the new column 'path' to the 'user_table'
+                database.execSQL("ALTER TABLE user_table ADD COLUMN profilePic TEXT DEFAULT '' NOT NULL")
+            }
+        }
+
+
     }
+
+
 }

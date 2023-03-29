@@ -5,11 +5,9 @@ import Data_Class.UserDatabase
 import Validation.ValidationUtils
 import android.app.DatePickerDialog
 import android.content.Context
-import android.content.Intent
-import android.graphics.BitmapFactory
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -17,19 +15,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.alpha
 import com.example.myapp.MainHomeActivity
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentEditProfileBinding
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
-    private var editProfileBinding: FragmentEditProfileBinding?=null
+class EditProfileFragment : BaseFragment(),DatePickerDialog.OnDateSetListener {
+    private var editProfileBinding: FragmentEditProfileBinding? = null
     private val binding get() = editProfileBinding!!
     private lateinit var userDb: UserDatabase
     private lateinit var datePickerDialog: DatePickerDialog
@@ -38,11 +38,11 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        editProfileBinding= FragmentEditProfileBinding.inflate(inflater,container,false)
+        editProfileBinding = FragmentEditProfileBinding.inflate(inflater, container, false)
 
-        userDb= UserDatabase.getDatabase(requireContext())
-        val toolbar=binding.toolbar
-        toolbar.title="Edit Profile Screen"
+        userDb = UserDatabase.getDatabase(requireContext())
+        val toolbar = binding.toolbar
+        toolbar.title = "Edit Profile Screen"
 
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
@@ -67,15 +67,17 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
             val age = binding.editTextAge.text.toString()
             val validated = validation.isValidFname(fname) && validation.isValidLname(lname) &&
                     validation.isValidEmail(email) && validation.isValidPassword(pass)
-                    && validation.isValidDob(dob) && validation.isValidAge(age) &&validation.isValidGender(gender)
+                    && validation.isValidDob(dob) && validation.isValidAge(age) && validation.isValidGender(
+                gender
+            )
             if (validated == true) {
 
-                val userDet = UserData(null, fname, lname, email, pass, gender, dob, age,false)
+                val userDet = UserData(null, fname, lname, email, pass, gender, dob, age, false)
                 GlobalScope.launch {
                     updateDetails(userDet)
                 }
-                Toast.makeText(requireContext(),"UserData Updated", Toast.LENGTH_SHORT).show()
-               requireActivity().supportFragmentManager.popBackStack()
+                Toast.makeText(requireContext(), "User Details Updated", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.popBackStack()
             }
         }
 
@@ -89,101 +91,41 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         }
 
         binding.imageViewProfile.setOnClickListener {
-            MainHomeActivity.replaceFragment(requireActivity().supportFragmentManager,DisplayProfilePicFragment(),"displayPicFragment")
+            replaceHomeFragment(
+                requireActivity().supportFragmentManager,
+                DisplayProfilePicFragment(),
+                "displayPicFragment",
+                0
+            )
         }
 
-//        binding.imageViewProfile.setOnClickListener {
-//            val option= arrayOf(
-//                "Take Photo",
-//                "Choose from Gallery")
-//            val builder= AlertDialog.Builder(requireContext())
-//            builder.setTitle("Select Option")
-//            builder.setItems(option){
-//                    dialog, item ->
-//                when{
-//                    option[item]== "Take Photo"->{
-//                        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//                        startActivityForResult(intent, EditProfileFragment.REQUEST_CAMERA)
-//                    }
-//                    option[item] =="Choose from Gallery"->{
-//                        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                        intent.type = "image/*"
-//                        startActivityForResult(intent, EditProfileFragment.REQUEST_GALLERY)
-//                    }
-//                }
-//            }
-//            builder.show()
-//        }
+        binding.editTextEmail.alpha=0.5f
 
         return binding.root
     }
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if(resultCode== AppCompatActivity.RESULT_OK){
-//            when(requestCode) {
-//                REQUEST_CAMERA -> {
-//                    val imageUri = data?.extras!!.get("data") as Bitmap
-//                    val byteArrayOutputStream = ByteArrayOutputStream()
-//                    imageUri.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-//                    val byteArray = byteArrayOutputStream.toByteArray()
-//                    imageData=byteArray
-//                    //   imageData= imageUri
-//                    binding.imageViewProfile.setImageBitmap(imageUri)
-//
-//                }
-//                REQUEST_GALLERY -> {
-////                    val selectedImage = data?.data
-////                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-////                    val cursor =
-////                        contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
-////                    cursor!!.moveToFirst()
-////                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-////                    val picturePath = cursor.getString(columnIndex)
-////                    cursor.close()
-////                    val image = BitmapFactory.decodeFile(picturePath)
-////                    val byteArrayOutputStream = ByteArrayOutputStream()
-////                    image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-////                    val byteArray = byteArrayOutputStream.toByteArray()
-////                    imageData = byteArray
-////                    binding.imageViewProfile.setImageBitmap(image)
-//
-//                    val selectedImageUri: Uri? = data?.data
-//                    if (selectedImageUri != null) {
-//                        val inputStream = contentResolver.openInputStream(selectedImageUri)
-//                        val bitmap = BitmapFactory.decodeStream(inputStream)
-//                        val byteArrayOutputStream = ByteArrayOutputStream()
-//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-//                        val imageByteArray: ByteArray = byteArrayOutputStream.toByteArray()
-//                        imageData= imageByteArray
-//                        binding.imageViewProfile.setImageBitmap(bitmap)
-//
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
 
-    suspend fun updateDetails(userDet: UserData){
-        withContext(Dispatchers.IO){
-            val user= userDb.userDao().findByEmail(userDet.email!!)
-            if(user!=null){
-                user.firstname= userDet.firstname
-                user.lastname= userDet.lastname
-                user.password= userDet.password
-                user.email= userDet.email
-                user.gender= userDet.gender
-                user.dob= userDet.dob
-                user.age=userDet.age
-              //  user.imagePath= imageData
+    suspend fun updateDetails(userDet: UserData) {
+        withContext(Dispatchers.IO) {
+            val user = userDb.userDao().findByEmail(userDet.email!!)
+            if (user != null) {
+                user.firstname = userDet.firstname
+                user.lastname = userDet.lastname
+                user.password = userDet.password
+                user.email = userDet.email
+                user.gender = userDet.gender
+                user.dob = userDet.dob
+                user.age = userDet.age
+                //  user.imagePath= imageData
 
                 println("image= ${user.profilePic}")
-                LoginFragment.currentemail= userDet.email!!
+                LoginFragment.currentemail = userDet.email!!
 
-                val sharedPreferences = requireActivity().getSharedPreferences(LoginFragment.sharedPrefKey, Context.MODE_PRIVATE)
+                val sharedPreferences = requireActivity().getSharedPreferences(
+                  sharedPrefKey,
+                    Context.MODE_PRIVATE
+                )
                 val editor = sharedPreferences.edit()
-                editor.putString("password",user.password)
+                editor.putString(Password, user.password)
                 editor.apply()
 
 
@@ -194,17 +136,18 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         }
 
     }
-    fun setDate(){
-        //calender
-        val cal= Calendar.getInstance()
-        val year= cal.get(Calendar.YEAR)
-        val month= cal.get(Calendar.MONTH)
-        val day= cal.get(Calendar.DAY_OF_MONTH)
-        val minAge=15
-        val maxAge=60
 
-        val maxYear= year-minAge
-        val minYear= year-maxAge
+    fun setDate() {
+        //calender
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+        val minAge = 15
+        val maxAge = 60
+
+        val maxYear = year - minAge
+        val minYear = year - maxAge
 
 
         // set min and max dates
@@ -216,7 +159,7 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         }.timeInMillis
 
 
-        datePickerDialog = DatePickerDialog(requireContext(),this, year, month, day)
+        datePickerDialog = DatePickerDialog(requireContext(), this, year, month, day)
 
 
         //on click of btn dob, datepicker dialog should be open
@@ -231,9 +174,9 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
     }
 
     suspend fun fetchUser(userEmail: String?) {
-        withContext(Dispatchers.Main){
-            val user= userDb.userDao().findByEmail(userEmail!!)
-            if(user!=null){
+        withContext(Dispatchers.Main) {
+            val user = userDb.userDao().findByEmail(userEmail!!)
+            if (user != null) {
                 binding.editTextFname.setText(user.firstname)
                 binding.editTextLname.setText(user.lastname)
                 binding.editTextEmail.setText(user.email)
@@ -242,15 +185,12 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                 binding.editTextDob.setText(user.dob)
                 binding.editTextAge.setText(user.age.toString())
 
-                if(user.profilePic==null){
+                if (user.profilePic == null) {
                     binding.imageViewProfile.setImageResource(R.drawable.baseline_person_24)
-                }else{
+                } else {
                     //val bitmap= BitmapFactory.decodeByteArray(user.profilePic, 0, user.profilePic!!.size)
                     binding.imageViewProfile.setImageURI(Uri.parse(user.profilePic))
                 }
-
-
-
 
 
             }
@@ -259,14 +199,6 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
 
     }
 
-    companion object {
-        private const val REQUEST_CAMERA = 1
-        private const val REQUEST_GALLERY = 2
-
-        lateinit var imageData:ByteArray
-
-
-    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -275,10 +207,6 @@ class EditProfileFragment : Fragment(),DatePickerDialog.OnDateSetListener {
             }
             else -> return super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
 

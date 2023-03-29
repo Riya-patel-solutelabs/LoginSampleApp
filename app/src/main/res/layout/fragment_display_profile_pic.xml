@@ -38,7 +38,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline_top"
         app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
-        android:background="@drawable/baseline_person_null"
        />
 
 

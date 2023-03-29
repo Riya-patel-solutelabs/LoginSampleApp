@@ -1,26 +1,25 @@
 package fragments
 
 import Data_Class.UserDatabase
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import androidx.navigation.fragment.NavHostFragment
 import com.example.myapp.MainHomeActivity
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentProfileBinding
+
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class ProfileFragment : Fragment() {
-    private var profileBinding:FragmentProfileBinding?=null
+class ProfileFragment : BaseFragment() {
+    private var profileBinding: FragmentProfileBinding?=null
     private val binding get()= profileBinding!!
     private lateinit var userDb: UserDatabase
 
@@ -48,7 +47,7 @@ class ProfileFragment : Fragment() {
             when(menuItem.itemId) {
                 R.id.home -> {
                     // Load HomeActivity
-                    MainHomeActivity.replaceFragment(requireActivity().supportFragmentManager,HomeFragment(),"homeFragment")
+                    replaceHomeFragment(requireActivity().supportFragmentManager,HomeFragment(),"homeFragment",0)
                     true
                 }
                 R.id.profile->{
@@ -58,7 +57,7 @@ class ProfileFragment : Fragment() {
                 }
                 R.id.settings->{
                     // Load Settings Fragment
-                    MainHomeActivity.replaceFragment(requireActivity().supportFragmentManager,SettingFragment(),"settingFragment")
+                    replaceHomeFragment(requireActivity().supportFragmentManager,SettingFragment(),"settingFragment",0)
                     true
                 }
                 else -> false
@@ -108,7 +107,7 @@ class ProfileFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.menu_edit->{
-                MainHomeActivity.replaceFragment(requireActivity().supportFragmentManager,EditProfileFragment(),"profiletoEditProfile")
+                replaceHomeFragment(requireActivity().supportFragmentManager,EditProfileFragment(),"profiletoEditProfile",0)
             }
 
                 //EditProfileFragment.navigateWithoutBackstack(requireActivity().supportFragmentManager,EditProfileFragment())
@@ -122,7 +121,7 @@ class ProfileFragment : Fragment() {
         super.onResume()
         val navView = binding.bottomNavigationView
         navView.selectedItemId=R.id.profile // set the checked item to the ID of the home Fragment
-        requireActivity().supportFragmentManager.popBackStack("profiletoEditProfile",FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        requireActivity().supportFragmentManager.popBackStack(getString(R.string.label_profile_to_editProfile),FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

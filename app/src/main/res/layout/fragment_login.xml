@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/guideline_top2"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
-        android:hint="@string/label_username_or_email"
+        android:hint="@string/label_email"
         android:padding="@dimen/dp_2"
         app:hintTextColor="@color/purple_700"
         >
